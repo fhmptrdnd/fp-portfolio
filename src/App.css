@@ -92,11 +92,11 @@ img {
 
   padding: 28px 5%;
 
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     rgba(3, 4, 5, 0.9),
     rgba(3, 4, 5, 0)
-  );
+  ); */
 
   backdrop-filter: blur(2px);
 }
@@ -158,13 +158,13 @@ img {
   overflow: hidden;
   isolation: isolate;
 
-  background:
+  /* background:
     radial-gradient(
       ellipse at 75% 75%,
       rgba(24, 47, 52, 0.14),
       transparent 55%
     ),
-    #030506;
+    #030506; */
 }
 
 .hero-content {
@@ -280,7 +280,7 @@ img {
   position: relative;
   width: 100%;
 
-  background: #030506;
+  /* background: #030506; */
 
   /* Important: do not clip sticky children */
   overflow: visible;
@@ -294,12 +294,14 @@ img {
 
   text-align: center;
 
-  background:
+  /* background:
     radial-gradient(
       ellipse at 50% 100%,
       rgba(52, 85, 94, 0.2),
       transparent 70%
-    );
+    ); */
+
+    /* background: transparent */
 }
 
 .works-heading > span {
@@ -350,7 +352,7 @@ img {
   /* Total scroll duration */
   height: 600vh;
 
-  background: #030506;
+  /* background: #030506; */
 
   /* Do not use overflow: hidden here */
   overflow: visible;
@@ -367,7 +369,7 @@ img {
   height: 100vh;
   height: 100svh;
 
-  background: #030506;
+  /* background: #030506; */
 
   /* Clip the Canvas only */
   overflow: hidden;
@@ -433,6 +435,19 @@ img {
 
 .modal-content.modal-content-closing {
   animation: modalContentOut 0.25s ease forwards;
+}
+
+.modal-gallery {
+  display: grid;
+  gap: 16px;
+}
+
+.modal-image,
+.modal-detail-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 @keyframes modalFadeIn {
@@ -619,13 +634,13 @@ img {
 
   padding: 120px 10% 35px;
 
-  background:
+  /* background:
     radial-gradient(
       ellipse at 50% 100%,
       rgba(32, 58, 63, 0.16),
       transparent 65%
     ),
-    #030506;
+    #030506; */
 }
 
 #contact > span {
@@ -1242,5 +1257,276 @@ img {
 @media (max-width: 768px) {
   .typing-title h1 {
     font-size: clamp(60px, 12vw, 100px);
+  }
+}
+
+/* ========================================
+   BACKGROUND RIPPLE EFFECT
+======================================== */
+.background-ripple-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ripple-filter-svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.background-ripple {
+  position: absolute;
+
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+
+  border-radius: 50%;
+  pointer-events: none;
+
+  transform: translate(-50%, -50%) scale(0.05);
+  opacity: 0;
+
+  filter: url("#water-ripple-distortion");
+
+  background:
+    radial-gradient(
+      circle,
+      transparent 0 35%,
+      rgba(180, 225, 235, 0.02) 36%,
+      rgba(180, 225, 235, 0.16) 37%,
+      rgba(180, 225, 235, 0.04) 38%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle,
+      transparent 0 53%,
+      rgba(180, 225, 235, 0.12) 54%,
+      rgba(180, 225, 235, 0.025) 55%,
+      transparent 57%
+    ),
+    radial-gradient(
+      circle,
+      transparent 0 70%,
+      rgba(180, 225, 235, 0.07) 71%,
+      rgba(180, 225, 235, 0.015) 72%,
+      transparent 74%
+    );
+
+  animation:
+    realisticWaterRipple
+    var(--ripple-duration)
+    cubic-bezier(0.12, 0.55, 0.35, 1)
+    forwards;
+}
+
+@keyframes realisticWaterRipple {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.05);
+  }
+
+  12% {
+    opacity: 0.8;
+  }
+
+  45% {
+    opacity: 0.42;
+  }
+
+  75% {
+    opacity: 0.18;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background-ripple {
+    animation-duration: 0.5s;
+  }
+}
+
+/* ========================================
+   AMBIENT WATER BACKGROUND
+======================================== */
+.ambient-water-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-water-blob {
+  position: absolute;
+
+  width: 55vw;
+  height: 55vw;
+  max-width: 900px;
+  max-height: 900px;
+
+  border-radius: 50%;
+  filter: blur(100px);
+
+  opacity: 1;
+  will-change: transform;
+
+  mix-blend-mode: screen;
+}
+
+.ambient-water-blob-1 {
+  top: -20%;
+  left: -15%;
+
+  /* background: red !important;
+  opacity: 1 !important;
+  filter: blur(30px) !important; */
+
+  background: radial-gradient(
+    circle,
+    rgba(35, 110, 135, 0.75) 0%,
+    rgba(15, 65, 85, 0.35) 35%,
+    transparent 70%
+  );
+
+  animation: waterBlobOne 28s ease-in-out infinite alternate;
+}
+
+.ambient-water-blob-2 {
+  top: 25%;
+  right: -25%;
+
+  background: radial-gradient(
+    circle,
+    rgba(25, 100, 125, 0.7) 0%,
+    rgba(10, 50, 70, 0.3) 40%,
+    transparent 72%
+  );
+
+  animation: waterBlobTwo 34s ease-in-out infinite alternate;
+}
+
+.ambient-water-blob-3 {
+  bottom: -30%;
+  left: 10%;
+
+  background: radial-gradient(
+    circle,
+    rgba(20, 85, 105, 0.65) 0%,
+    rgba(8, 40, 55, 0.25) 42%,
+    transparent 72%
+  );
+
+  animation: waterBlobThree 32s ease-in-out infinite alternate;
+}
+
+.ambient-water-blob-4 {
+  top: 35%;
+  left: 25%;
+
+  width: 40vw;
+  height: 40vw;
+
+  background: radial-gradient(
+    circle,
+    rgba(50, 125, 140, 0.4) 0%,
+    rgba(20, 70, 90, 0.2) 38%,
+    transparent 70%
+  );
+
+  animation: waterBlobFour 38s ease-in-out infinite alternate;
+}
+
+.navbar,
+.hero,
+.works-heading,
+.works-footer,
+footer {
+  background: transparent;
+}
+
+.ambient-water-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(3, 5, 6, 0.3),
+    rgba(3, 5, 6, 0.15) 45%,
+    rgba(3, 5, 6, 0.45)
+  );
+}
+
+@keyframes waterBlobOne {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(18vw, 12vh, 0) scale(1.15);
+  }
+
+  100% {
+    transform: translate3d(8vw, 25vh, 0) scale(0.9);
+  }
+}
+
+@keyframes waterBlobTwo {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-15vw, -10vh, 0) scale(1.1);
+  }
+
+  100% {
+    transform: translate3d(-25vw, 15vh, 0) scale(0.95);
+  }
+}
+
+@keyframes waterBlobThree {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
+
+  50% {
+    transform: translate3d(12vw, -18vh, 0) scale(1.2);
+  }
+
+  100% {
+    transform: translate3d(25vw, -8vh, 0) scale(1);
+  }
+}
+
+@keyframes waterBlobFour {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-10vw, 15vh, 0) scale(1.2);
+  }
+
+  100% {
+    transform: translate3d(12vw, -12vh, 0) scale(0.85);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-water-blob {
+    animation: none;
   }
 }
