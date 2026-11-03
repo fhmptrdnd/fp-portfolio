@@ -5,7 +5,7 @@ import BrandLogo from "./components/BrandLogo";
 import TypingTitle from "./components/TypingTitle";
 import BackgroundRipple from "./components/BackgroundRipple";
 import AmbientWaterBackground from "./components/AmbientWaterBackground";
-import SoftwareStar from "./components/SoftwareStar";
+// import SoftwareStar from "./components/SoftwareStar";
 
 export default function App() {
   return (
