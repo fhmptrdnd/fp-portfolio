@@ -79,7 +79,7 @@ export default function App() {
             in mind?
           </h2>
 
-          <a href="mailto:hello@example.com">
+          <a href="mailto:fahmiputradendi@gmail.com" target="_blank" rel="noopener noreferrer" className="contact-button">
             GET IN TOUCH ↗
           </a>
 
